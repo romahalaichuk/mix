@@ -3,16 +3,15 @@ document.addEventListener("DOMContentLoaded", function () {
 	const mainContent = document.getElementById("mainContent");
 	const enterButton = document.getElementById("enterButton");
 
-	// Sprawdź, czy cookie zostało już zaakceptowane
-	const isCookieAccepted =
-		document.cookie.indexOf("cookie_accepted=true") !== -1;
+	// Sprawdź, czy sesja zawiera informację o akceptacji ciasteczka
+	const isCookieAccepted = sessionStorage.getItem("cookie_accepted") === "true";
 
 	if (isCookieAccepted) {
-		// Jeśli cookie jest zaakceptowane, ukryj overlay i pokaż treść strony
+		// Jeśli ciasteczko jest zaakceptowane, ukryj overlay i pokaż treść strony
 		overlay.style.display = "none";
 		mainContent.style.display = "block";
 	} else {
-		// Jeśli cookie nie jest zaakceptowane, pokaż overlay
+		// Jeśli ciasteczko nie jest zaakceptowane, pokaż overlay
 		overlay.style.display = "flex";
 	}
 
@@ -21,13 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
 		overlay.style.opacity = 0;
 		setTimeout(() => {
 			overlay.style.display = "none";
-			// Ustaw cookie i pokaż główną treść strony
-			setCookie("cookie_accepted", "true");
+			// Ustaw informację o akceptacji ciasteczka w sesji i pokaż główną treść strony
+			sessionStorage.setItem("cookie_accepted", "true");
 			mainContent.style.display = "block";
 		}, 500);
 	});
-
-	function setCookie(name, value) {
-		document.cookie = `${name}=${value};path=/`;
-	}
 });
