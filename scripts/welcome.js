@@ -4,7 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	const enterButton = document.getElementById("enterButton");
 
 	// Sprawdź, czy cookie zostało już zaakceptowane
-	if (document.cookie.indexOf("cookie_accepted=true") !== -1) {
+	const isCookieAccepted =
+		document.cookie.indexOf("cookie_accepted=true") !== -1;
+
+	if (isCookieAccepted) {
 		// Jeśli cookie jest zaakceptowane, ukryj overlay i pokaż treść strony
 		overlay.style.display = "none";
 		mainContent.style.display = "block";
@@ -19,9 +22,12 @@ document.addEventListener("DOMContentLoaded", function () {
 		setTimeout(() => {
 			overlay.style.display = "none";
 			// Ustaw cookie i pokaż główną treść strony
-			document.cookie =
-				"cookie_accepted=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/";
+			setCookie("cookie_accepted", "true");
 			mainContent.style.display = "block";
 		}, 500);
 	});
+
+	function setCookie(name, value) {
+		document.cookie = `${name}=${value};path=/`;
+	}
 });
