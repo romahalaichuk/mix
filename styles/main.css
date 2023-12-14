@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap");
 body,
 figure,
 h1,
@@ -47,7 +48,7 @@ html {
   padding: 0;
   height: 100%;
   font-family: "Arial", sans-serif;
-  overflow: hidden; /* Zablokuj przewijanie strony */
+  overflow: hidden;
 }
 
 #overlay {
@@ -64,7 +65,34 @@ html {
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
 }
+#overlay .face {
+  position: relative;
+  overflow: hidden;
+  z-index: 1; /* Wysoka wartość z-index dla zdjęcia z oczami */
+}
+#overlay .face img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+}
+#overlay .eye {
+  position: absolute;
+  width: 10%;
+  height: 10%;
+  background-color: #333;
+  border-radius: 50%;
+}
+#overlay #left-eye {
+  left: 25%;
+  top: 40%;
+}
+#overlay #right-eye {
+  right: 25%;
+  top: 40%;
+}
 #overlay .overlay-content {
+  position: relative;
   text-align: center;
   color: #fff;
   padding: 20px;
@@ -76,7 +104,7 @@ html {
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #3498db; /* Użyj zmiennej $primary-color */
+  background-color: #3498db;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -86,4 +114,190 @@ html {
   display: none;
   padding: 20px;
   color: #333;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  font-family: inherit;
+  position: inherit;
+}
+
+body {
+  background: #feeeed;
+  margin: 0;
+  box-sizing: border-box;
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  font-size: 18px;
+  font-family: "Luckiest Guy", sans-serif;
+  color: #7ba7bc;
+  grid-template-rows: 1fr 4fr;
+  overflow: hidden;
+}
+body #tracker {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
+
+p {
+  font-size: calc(1.1rem + 1vw);
+  line-height: 1.4em;
+  margin: 0;
+  text-align: center;
+  color: #333;
+}
+p .highlight {
+  color: #7ba7bc;
+}
+
+main {
+  width: 100%;
+  max-width: 22rem;
+  display: flex;
+  align-items: center;
+}
+main button {
+  padding: 0.5em 0.8em 0.3em;
+  font-weight: bold;
+  background: #7ba7bc;
+  color: #fff;
+  border-radius: 5rem;
+  margin-right: -10rem;
+  cursor: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  color: #333;
+  border: 0.2rem solid #333;
+  transition: margin 0.05s ease;
+  transform-origin: center;
+}
+main button:focus, main button:hover, main button:active {
+  outline: none;
+  border: 0.3rem solid #333;
+}
+main #cursor {
+  position: absolute;
+  width: 16px;
+  left: 50%;
+  top: 50%;
+  z-index: -2;
+  transform-origin: center;
+  opacity: 0;
+}
+main #cursor.swatted {
+  opacity: 1;
+  animation: swatted 0.15s ease-out;
+}
+main #Cat {
+  transform-origin: bottom center;
+  animation: tail 7s infinite alternate;
+  z-index: 0;
+  pointer-events: none;
+}
+main #Tail {
+  transform-origin: bottom;
+  animation: tail 2s ease infinite alternate;
+}
+main #Paw {
+  transform-origin: 16% 53%;
+  transform: rotate(-185deg);
+  transition: all 0.2s;
+}
+main #Paw.ready-to-swat {
+  transform: rotate(-56deg);
+}
+main .swat {
+  animation: swat 0.2s;
+  filter: blur(10px);
+}
+main #Left-eye-pupil,
+main #right-eye-pupil {
+  transform-origin: center;
+}
+main #Left-eye,
+main #Right-eye {
+  animation: blink 8s infinite alternate;
+  transform-origin: 50% 26%;
+  transition: all 0.25s ease;
+}
+
+@keyframes tail {
+  0% {
+    transform: rotate(0deg);
+  }
+  27% {
+    transform: rotate(2deg);
+  }
+  69% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes swat {
+  0% {
+    transform: rotate(-20deg) scale(1.2);
+  }
+  25% {
+    transform: rotate(-82.5deg) scale(1.2);
+  }
+  50% {
+    transform: rotate(-185deg) scale(1.2);
+  }
+  51% {
+    transform: rotate(-20deg) scale(1.2);
+  }
+  75.5% {
+    transform: rotate(-82.5deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(-185deg) scale(1.2);
+  }
+}
+@keyframes blink {
+  0% {
+    transform: scaleY(1);
+  }
+  39% {
+    transform: scaleY(1);
+  }
+  40% {
+    transform: scaleY(0);
+  }
+  41% {
+    transform: scaleY(1);
+  }
+  69% {
+    transform: scaleY(1);
+  }
+  70% {
+    transform: scaleY(0);
+  }
+  71% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+@keyframes swatted {
+  0% {
+    opacity: 1;
+    transform: scale(1) translate(0, 0) rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(3) translate(-15vw, 20vh) rotate(1080deg);
+  }
 }/*# sourceMappingURL=main.css.map */
