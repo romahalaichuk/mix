@@ -36,7 +36,7 @@ html {
 	.eye {
 		position: absolute;
 		width: 20%;
-		height: 11%;
+		height: 15%;
 		background-color: rgba(2, 23, 37, 0.876);
 		border-radius: 50%;
 		overflow: hidden;
@@ -45,24 +45,23 @@ html {
 
 	#left-eye {
 		left: 20%;
-		top: 20%;
+		top: 40%;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.659);
 	}
 
 	#right-eye {
 		right: 20%;
-		top: 20%;
+		top: 40%;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.716);
 	}
 
 	.overlay-content {
 		margin: 50px 0;
-		margin-bottom: 250px;
+		background: linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0));
 		text-align: center;
 		color: #fff;
 		padding: 20px;
 		max-width: 80%;
-		background-color: rgba(91, 136, 198, 0.549);
 		border-radius: 10px;
 		display: flex;
 		flex-direction: column;
@@ -102,7 +101,7 @@ html {
 		background-color: white;
 		border-radius: 50%;
 		position: absolute;
-		top: 65%;
+		top: 55%;
 		left: 35%;
 		z-index: 2;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.607);
