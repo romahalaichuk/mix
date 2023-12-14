@@ -20,33 +20,35 @@ document.addEventListener("DOMContentLoaded", function () {
 			mainContent.style.display = "block";
 		}, 500);
 	});
+
+	document.addEventListener("mousemove", handleMove);
+	document.addEventListener("touchmove", handleMove);
+
+	function handleMove(event) {
+		const eyeSpeed = 10; // Prędkość ruchu oczu
+
+		const leftEye = document.getElementById("left-eye");
+		const rightEye = document.getElementById("right-eye");
+
+		const { clientX: mouseX, clientY: mouseY } = event.touches
+			? event.touches[0]
+			: event;
+
+		moveEye(leftEye, mouseX, mouseY);
+		moveEye(rightEye, mouseX, mouseY);
+	}
+
+	function moveEye(eye, mouseX, mouseY) {
+		const eyeRect = eye.getBoundingClientRect();
+		const eyeX = eyeRect.left + eyeRect.width / 2;
+		const eyeY = eyeRect.top + eyeRect.height / 2;
+
+		const angle = Math.atan2(mouseY - eyeY, mouseX - eyeX);
+		const distance = Math.min(eyeRect.width, eyeRect.height) / 4;
+
+		const offsetX = Math.cos(angle) * distance;
+		const offsetY = Math.sin(angle) * distance;
+
+		eye.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+	}
 });
-
-document.addEventListener("mousemove", moveEyes);
-
-function moveEyes(event) {
-	const eyeSpeed = 10; // Prędkość ruchu oczu
-
-	const leftEye = document.getElementById("left-eye");
-	const rightEye = document.getElementById("right-eye");
-
-	const { clientX: mouseX, clientY: mouseY } = event;
-
-	moveEye(leftEye, mouseX, mouseY);
-	moveEye(rightEye, mouseX, mouseY);
-}
-
-function moveEye(eye, mouseX, mouseY) {
-	const eyeRect = eye.getBoundingClientRect();
-	const eyeX = eyeRect.left + eyeRect.width / 2;
-	const eyeY = eyeRect.top + eyeRect.height / 2;
-
-	const angle = Math.atan2(mouseY - eyeY, mouseX - eyeX);
-	const distance = Math.min(eyeRect.width, eyeRect.height) / 4;
-
-	const offsetX = Math.cos(angle) * distance;
-	const offsetY = Math.sin(angle) * distance;
-
-	eye.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-}
-const get = (arg) => document.querySelector(arg);
