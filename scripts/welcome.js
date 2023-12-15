@@ -5,6 +5,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	const isCookieAccepted = sessionStorage.getItem("cookie_accepted") === "true";
 
+	const clickSound = new Audio("/music/btn.mp3");
+	clickSound.volume = 0.9;
+
+	const backgroundMusic = new Audio("/music/web.mp3");
+	backgroundMusic.loop = true;
+	backgroundMusic.volume = 0.3;
+	setTimeout(() => {
+		backgroundMusic.play();
+	}, 1000);
+
 	if (isCookieAccepted) {
 		overlay.style.display = "none";
 		mainContent.style.display = "block";
@@ -18,14 +28,25 @@ document.addEventListener("DOMContentLoaded", function () {
 			overlay.style.display = "none";
 			sessionStorage.setItem("cookie_accepted", "true");
 			mainContent.style.display = "block";
+
+			clickSound.play();
 		}, 500);
+
+		backgroundMusic.play();
 	});
 
+	if (isCookieAccepted) {
+		backgroundMusic.play();
+	}
+	volumeSlider.addEventListener("input", function () {
+		const volume = parseFloat(volumeSlider.value);
+		backgroundMusic.volume = volume;
+	});
 	document.addEventListener("mousemove", handleMove);
 	document.addEventListener("touchmove", handleMove);
 
 	function handleMove(event) {
-		const eyeSpeed = 10; // Prędkość ruchu oczu
+		const eyeSpeed = 10;
 
 		const leftEye = document.getElementById("left-eye");
 		const rightEye = document.getElementById("right-eye");
