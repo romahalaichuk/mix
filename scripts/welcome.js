@@ -5,10 +5,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	const isCookieAccepted = sessionStorage.getItem("cookie_accepted") === "true";
 
-	const clickSound = new Audio("/music/btn.mp3");
+	const clickSound = new Audio("./music/btn.mp3");
 	clickSound.volume = 0.9;
 
-	const backgroundMusic = new Audio("/music/web.mp3");
+	const backgroundMusic = new Audio("./music/web.mp3");
 	backgroundMusic.loop = true;
 	backgroundMusic.volume = 0.3;
 	setTimeout(() => {
