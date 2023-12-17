@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	const backgroundMusic = new Audio("./music/web.mp3");
 	backgroundMusic.loop = true;
-	backgroundMusic.volume = 0.3;
+	backgroundMusic.volume = 0.2;
 	setTimeout(() => {
 		backgroundMusic.play();
 	}, 1000);
