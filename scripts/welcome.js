@@ -35,13 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		backgroundMusic.play();
 	});
 
-	if (isCookieAccepted) {
-		backgroundMusic.play();
-	}
-	volumeSlider.addEventListener("input", function () {
-		const volume = parseFloat(volumeSlider.value);
-		backgroundMusic.volume = volume;
-	});
 	document.addEventListener("mousemove", handleMove);
 	document.addEventListener("touchmove", handleMove);
 
