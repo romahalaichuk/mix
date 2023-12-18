@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	const backgroundMusic = new Audio("./music/web.mp3");
 	backgroundMusic.loop = true;
-	backgroundMusic.volume = 0.2;
+	backgroundMusic.volume = 0.3;
 	setTimeout(() => {
 		backgroundMusic.play();
 	}, 1000);
@@ -35,12 +35,15 @@ document.addEventListener("DOMContentLoaded", function () {
 		backgroundMusic.play();
 	});
 
+	if (isCookieAccepted) {
+		backgroundMusic.play();
+	}
+
 	document.addEventListener("mousemove", handleMove);
 	document.addEventListener("touchmove", handleMove);
 
 	function handleMove(event) {
 		const eyeSpeed = 10;
-
 		const leftEye = document.getElementById("left-eye");
 		const rightEye = document.getElementById("right-eye");
 
