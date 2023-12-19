@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	const overlay = document.getElementById("overlay");
 	const mainContent = document.getElementById("mainContent");
 	const enterButton = document.getElementById("enterButton");
+	const volumeSlider = document.getElementById("volumeSlider"); // Dodaj pobieranie suwaka
 
 	const isCookieAccepted = sessionStorage.getItem("cookie_accepted") === "true";
 
@@ -38,6 +39,11 @@ document.addEventListener("DOMContentLoaded", function () {
 	if (isCookieAccepted) {
 		backgroundMusic.play();
 	}
+
+	volumeSlider.addEventListener("input", function () {
+		const volume = parseFloat(volumeSlider.value);
+		backgroundMusic.volume = volume;
+	});
 
 	document.addEventListener("mousemove", handleMove);
 	document.addEventListener("touchmove", handleMove);
