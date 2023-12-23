@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Charity Foundations</title>
+		<style>
+			img {
+				width: 100px;
+				height: auto;
+				cursor: pointer;
+				margin: 10px;
+			}
+
+			.charity-container {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				margin-top: 20px;
+			}
+
+			.charity-item {
+				display: flex;
+				align-items: center;
+			}
+
+			.charity-item p {
+				margin-left: 10px;
+			}
+
+			footer {
+				text-align: center;
+				margin-top: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="charity-container" class="charity-container"></div>
+
+		<script>
+			function openCharityLink(url) {
+				window.open(url, "_blank");
+			}
+		</script>
+
+		<script>
+			const charities = [
+				{
+					title: "Save the Children",
+					url: "https://www.savethechildren.net/what-we-do/emergencies/ukraine-crisis",
+					img: "path/to/save_the_children_logo.png",
+				},
+				{
+					title: "Project HOPE",
+					url: "https://www.projecthope.org/country/ukraine/",
+					img: "path/to/project_hope_logo.png",
+				},
+				{
+					title: "UNITED24",
+					url: "https://u24.gov.ua/uk",
+					img: "path/to/united24_logo.png",
+				},
+				{
+					title: "International Medical Corps",
+					url: "https://internationalmedicalcorps.org/country/ukraine/",
+					img: "path/to/international_medical_corps_logo.png",
+				},
+				{
+					title: "Medicins Sans Frontieres",
+					url: "https://www.msf.org/ukraine",
+					img: "path/to/medicins_sans_frontieres_logo.png",
+				},
+				{
+					title: "RAZOM",
+					url: "https://www.razomforukraine.org/",
+					img: "path/to/razom_logo.png",
+				},
+				{
+					title: "Action against hunger",
+					url: "https://www.actionagainsthunger.org/location/europe/ukraine/",
+					img: "path/to/action_against_hunger_logo.png",
+				},
+				{
+					title: "World vision",
+					url: "https://www.wvi.org/emergencies/ukraine",
+					img: "path/to/world_vision_logo.png",
+				},
+				{
+					title: "Serhiy Prytula Charity Foundation",
+					url: "https://prytulafoundation.org/en",
+					img: "path/to/serhiy_prytula_charity_foundation_logo.png",
+				},
+			];
+
+			document.addEventListener("DOMContentLoaded", function () {
+				const charityContainer = document.getElementById("charity-container");
+
+				charities.forEach((charity, index) => {
+					const div = document.createElement("div");
+					const img = document.createElement("img");
+					const charNum = (index + 1).toString().padStart(2, "0");
+
+					img.src = charity.img;
+					img.alt = charity.title;
+					img.onclick = () => openCharityLink(charity.url);
+
+					div.className = "charity-item";
+					div.innerHTML = `<p>${charNum}</p>`;
+					div.appendChild(img);
+					charityContainer.appendChild(div);
+				});
+			});
+		</script>
+
+		<footer></footer>
+	</body>
+</html>
