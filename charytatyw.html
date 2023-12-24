@@ -13,38 +13,137 @@
 			}
 
 			.charity-container {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				margin-top: 20px;
+				border-radius: 16px;
+				color: #ffffff;
+				background: radial-gradient(
+					circle at top,
+					#4f2ee8,
+					rgba(93, 53, 202, 0.386)
+				);
+				overflow: hidden;
+				position: relative;
+				height: 29.625rem;
+				width: 22.25rem;
 			}
 
 			.charity-item {
 				display: flex;
 				align-items: center;
+				margin-left: 16px;
+				margin-right: 20px;
 			}
 
 			.charity-item p {
-				margin-left: 10px;
+				display: none;
+			}
+
+			.charity-item img {
+				margin-left: 20px;
+			}
+
+			.charity-slider {
+				padding-left: 40px;
+				width: 149px;
+				height: 292px;
+				overflow: hidden;
+				position: relative;
+			}
+
+			.slider {
+				transition: transform 0.5s ease-in-out;
+				height: 100%;
 			}
 
 			footer {
 				text-align: center;
 				margin-top: 20px;
 			}
+
+			.arrow-container {
+				position: absolute;
+				bottom: 32px;
+				left: 50%;
+				transform: translateX(-50%);
+			}
+
+			.arrow {
+				cursor: pointer;
+				width: 30px;
+				height: 30px;
+				fill: #000;
+				transition: transform 0.3s ease-in-out;
+				position: relative;
+				transform-origin: center;
+			}
+
+			.arrow:hover {
+				transform: scale(1.2);
+			}
+
+			.arrow.up {
+				transform: scaleY(-1);
+			}
 		</style>
 	</head>
 
 	<body>
-		<div id="charity-container" class="charity-container"></div>
+		<div class="container">
+			<div class="charity-container">
+				<h1>Support Ukraine</h1>
+				<div class="charity-slider">
+					<div class="slider" id="charity-container"></div>
+				</div>
+				<div class="arrow-container">
+					<svg
+						class="arrow"
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24"
+						onclick="nextSlide()">
+						<path d="M0 0h24v24H0z" fill="none" />
+						<path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z" />
+					</svg>
+				</div>
+			</div>
+		</div>
 
 		<script>
 			function openCharityLink(url) {
 				window.open(url, "_blank");
 			}
-		</script>
 
-		<script>
+			let currentIndex = 0;
+
+			function nextSlide() {
+				const slides = document.querySelector(".slider");
+				const totalSlides = document.querySelectorAll(".charity-item").length;
+				const visibleSlides = 5;
+
+				if (currentIndex < totalSlides - visibleSlides) {
+					currentIndex++;
+				} else {
+					currentIndex = 0;
+				}
+
+				const slideHeight =
+					document.querySelector(".charity-item").offsetHeight;
+
+				slides.style.transition = "transform 0.5s ease-in-out";
+				slides.style.transform = `translateY(-${currentIndex * slideHeight}px)`;
+
+				updateArrow();
+			}
+			function updateArrow() {
+				const arrow = document.querySelector(".arrow");
+				const totalSlides = document.querySelectorAll(".charity-item").length;
+				const visibleSlides = 5;
+
+				if (currentIndex >= totalSlides - visibleSlides) {
+					arrow.classList.add("up");
+				} else {
+					arrow.classList.remove("up");
+				}
+			}
+
 			const charities = [
 				{
 					title: "Save the Children",
@@ -102,17 +201,22 @@
 					const charNum = (index + 1).toString().padStart(2, "0");
 
 					img.src = charity.img;
-					img.alt = charity.title;
+
 					img.onclick = () => openCharityLink(charity.url);
 
 					div.className = "charity-item";
-					div.innerHTML = `<p>${charNum}</p>`;
+
+					div.innerText = charNum;
+
 					div.appendChild(img);
 					charityContainer.appendChild(div);
 				});
+
+				updateArrow();
 			});
 		</script>
 
 		<footer></footer>
+		<a href="./book.html">book</a>
 	</body>
 </html>
