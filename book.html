@@ -3,7 +3,172 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
+		<title>Book Categories</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 20px;
+			}
+
+			.categories-container {
+				margin-bottom: 20px;
+				overflow-y: auto;
+				max-height: 472px;
+
+				padding: 10px;
+				max-width: 356px;
+			}
+
+			.category-item {
+				margin-bottom: 10px;
+				cursor: pointer;
+			}
+
+			.categories-container::-webkit-scrollbar {
+				width: 8px;
+				height: 167px;
+			}
+
+			.categories-container::-webkit-scrollbar-thumb {
+				background-color: #e0e0e0;
+				border-radius: 12px;
+			}
+
+			.categories-container::-webkit-scrollbar-track {
+				background-color: transparent;
+				border-radius: 12px;
+			}
+
+			.all-categories-header {
+				margin-bottom: 10px;
+				cursor: pointer;
+				color: black;
+			}
+
+			.category-item,
+			.all-categories-header {
+				margin-bottom: 32px;
+				cursor: pointer;
+			}
+
+			.books-container {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+				grid-gap: 20px;
+				transition: opacity 0.5s ease;
+			}
+
+			.book-card {
+				padding: 10px;
+				text-align: center;
+			}
+
+			.book-card img {
+				max-width: 100%;
+				height: auto;
+				margin-bottom: 10px;
+			}
+
+			.book-details {
+				margin-top: 10px;
+			}
+
+			.popular-categories-container {
+				display: none;
+				margin-top: 20px;
+				font-weight: bold;
+			}
+		</style>
 	</head>
-	<body></body>
+	<body>
+		<div class="categories-container">
+			<div class="all-categories-header" id="all-categories-header">
+				All categories
+			</div>
+			<div class="categories" id="categories"></div>
+		</div>
+
+		<div class="popular-categories-container" id="popular-categories-container">
+			<div>Popular categories</div>
+		</div>
+
+		<div class="books-container" id="books-container"></div>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				const allCategoriesHeader = document.getElementById(
+					"all-categories-header"
+				);
+				const categoriesContainer = document.getElementById("categories");
+				const popularCategoriesContainer = document.getElementById(
+					"popular-categories-container"
+				);
+				const booksContainer = document.getElementById("books-container");
+
+				fetchBookCategories();
+
+				allCategoriesHeader.addEventListener("click", () => {
+					booksContainer.style.display =
+						booksContainer.style.display === "none" ||
+						booksContainer.style.display === ""
+							? "grid"
+							: "none";
+					popularCategoriesContainer.style.display =
+						popularCategoriesContainer.style.display === "none" ||
+						popularCategoriesContainer.style.display === ""
+							? "block"
+							: "none";
+				});
+
+				function fetchBookCategories() {
+					fetch("https://books-backend.p.goit.global/books/category-list")
+						.then((response) => response.json())
+						.then((categories) => {
+							categories.forEach((category) => {
+								const categoryItem = document.createElement("div");
+								categoryItem.classList.add("category-item");
+								categoryItem.textContent = category.list_name;
+								categoryItem.addEventListener("click", () =>
+									fetchBooksByCategory(category.list_name)
+								);
+								categoriesContainer.appendChild(categoryItem);
+							});
+						})
+						.catch((error) =>
+							console.error("Error fetching categories:", error)
+						);
+				}
+
+				function fetchBooksByCategory(category) {
+					booksContainer.innerHTML = "";
+
+					fetch(
+						`https://books-backend.p.goit.global/books/category?category=${category}`
+					)
+						.then((response) => response.json())
+						.then((books) => {
+							if (!books || books.length === 0) {
+								alert("No books found for the selected category.");
+							} else {
+								books.forEach((book) => {
+									const card = document.createElement("div");
+									card.classList.add("book-card");
+									card.innerHTML = `
+                                    <img src="${book.book_image}" alt="${book.title}">
+                                    <div class="book-details">
+                                        <h3>${book.title}</h3>
+                                        <p>${book.author}</p>
+                                    </div>`;
+									booksContainer.appendChild(card);
+								});
+							}
+						})
+						.catch((error) => console.error("Error fetching books:", error));
+
+					booksContainer.style.display = "grid";
+					popularCategoriesContainer.style.display = "none";
+				}
+			});
+		</script>
+	</body>
 </html>
