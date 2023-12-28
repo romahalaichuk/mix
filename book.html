@@ -14,14 +14,24 @@
 				margin-bottom: 20px;
 				overflow-y: auto;
 				max-height: 472px;
-
 				padding: 10px;
 				max-width: 356px;
 			}
 
 			.category-item {
-				margin-bottom: 10px;
+				margin-bottom: 32px;
 				cursor: pointer;
+				transition: color 0.3s ease, font-weight 0.3s ease;
+			}
+
+			.category-item.active {
+				color: #4f2ee8;
+				font-weight: bold;
+
+				font-weight: 700;
+				font-size: 18px;
+				line-height: 24px;
+				letter-spacing: -2%;
 			}
 
 			.categories-container::-webkit-scrollbar {
@@ -43,12 +53,6 @@
 				margin-bottom: 10px;
 				cursor: pointer;
 				color: black;
-			}
-
-			.category-item,
-			.all-categories-header {
-				margin-bottom: 32px;
-				cursor: pointer;
 			}
 
 			.books-container {
@@ -129,14 +133,31 @@
 								categoryItem.classList.add("category-item");
 								categoryItem.textContent = category.list_name;
 								categoryItem.addEventListener("click", () =>
-									fetchBooksByCategory(category.list_name)
+									handleCategoryClick(category.list_name, categoryItem)
 								);
 								categoriesContainer.appendChild(categoryItem);
 							});
+
+							if (categories.length > 0) {
+								handleCategoryClick(
+									categories[0].list_name,
+									categoriesContainer.children[0]
+								);
+							}
 						})
 						.catch((error) =>
 							console.error("Error fetching categories:", error)
 						);
+				}
+
+				function handleCategoryClick(category, clickedElement) {
+					document.querySelectorAll(".category-item").forEach((el) => {
+						el.classList.remove("active");
+					});
+
+					clickedElement.classList.add("active");
+
+					fetchBooksByCategory(category);
 				}
 
 				function fetchBooksByCategory(category) {
@@ -154,11 +175,11 @@
 									const card = document.createElement("div");
 									card.classList.add("book-card");
 									card.innerHTML = `
-                                    <img src="${book.book_image}" alt="${book.title}">
-                                    <div class="book-details">
-                                        <h3>${book.title}</h3>
-                                        <p>${book.author}</p>
-                                    </div>`;
+                                <img src="${book.book_image}" alt="${book.title}">
+                                <div class="book-details">
+                                    <h3>${book.title}</h3>
+                                    <p>${book.author}</p>
+                                </div>`;
 									booksContainer.appendChild(card);
 								});
 							}
