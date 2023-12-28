@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	const overlay = document.getElementById("overlay");
 	const mainContent = document.getElementById("mainContent");
 	const enterButton = document.getElementById("enterButton");
-	const volumeSlider = document.getElementById("volumeSlider"); // Dodaj pobieranie suwaka
+	const volumeSlider = document.getElementById("volumeSlider");
 
 	const isCookieAccepted = sessionStorage.getItem("cookie_accepted") === "true";
 
